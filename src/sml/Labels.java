@@ -22,7 +22,11 @@ public final class Labels {
 	public void addLabel(String label, int address) {
 		Objects.requireNonNull(label);
 		// TODO: Add a check that there are no label duplicates.
-		labels.put(label, address);
+		// TODO: Do I also need to check for value?
+		if (labels.containsKey(label)) {
+			labels.put(label, address);
+		}
+
 	}
 
 	/**
@@ -50,6 +54,10 @@ public final class Labels {
 		return "";
 	}
 
+	@Override
+	public int hashCode() {
+		return labels.hashCode();
+	}
 	// TODO: Implement equals and hashCode (needed in class Machine).
 
 	/**
