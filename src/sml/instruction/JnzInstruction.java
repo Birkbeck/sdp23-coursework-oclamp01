@@ -4,6 +4,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
+import java.util.Objects;
+
 // TODO: write a JavaDoc for the class
 
 /**
@@ -12,7 +14,7 @@ import sml.RegisterName;
 
 public class JnzInstruction extends Instruction {
     private final RegisterName result;
-    private String targetLabel;
+    private final String targetLabel;
 
     public static final String OP_CODE = "jnz";
 
@@ -28,7 +30,7 @@ public class JnzInstruction extends Instruction {
             return NORMAL_PROGRAM_COUNTER_UPDATE;
         }
         else {
-            // TO-DO: Parse label, return number (new program counter)
+            // TODO: Jump to line in program with matching label
             return 0;
         }
     }
@@ -36,5 +38,18 @@ public class JnzInstruction extends Instruction {
     @Override
     public String toString() {
         return getLabelString() + getOpcode() + " " + result + " " + targetLabel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SubInstruction that)) return false;
+        return false;
+        // TODO
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result); // TODO
     }
 }

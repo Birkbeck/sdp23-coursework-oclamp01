@@ -49,9 +49,19 @@ public abstract class Instruction {
 	}
 
 	// TODO: What does abstract in the declaration below mean?
-	//       (Write a short explanation.)
+	// An abstract method declaration means that a given method is not implemented; because
+	// the Instruction class contains abstract methods, it is itself an abstract class.
+	// For a subclass to be non-abstract, all abstract methods must be implemented. In the case of toString,
+	// all Instruction subclasses will override this method in different ways, with only the return type (String)
+	// and parameter list common to all subclasses.
 	@Override
 	public abstract String toString();
 
 	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
+	// TODO: Fully implement and test all equals and hashCode implementations
+	@Override
+	public abstract boolean equals(Object o);
+
+	@Override
+	public abstract int hashCode();
 }
