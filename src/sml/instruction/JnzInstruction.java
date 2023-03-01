@@ -14,14 +14,14 @@ import java.util.Objects;
 
 public class JnzInstruction extends Instruction {
     private final RegisterName result;
-    private final String targetLabel;
+    private final String operandLabel;
 
     public static final String OP_CODE = "jnz";
 
-    public JnzInstruction(String label, RegisterName result, String targetLabel) {
+    public JnzInstruction(String label, RegisterName result, String operandLabel) {
         super(label, OP_CODE);
         this.result = result;
-        this.targetLabel = targetLabel;
+        this.operandLabel = operandLabel;
     }
 
     @Override
@@ -30,14 +30,13 @@ public class JnzInstruction extends Instruction {
             return NORMAL_PROGRAM_COUNTER_UPDATE;
         }
         else {
-            // TODO: Jump to line in program with matching label
-            return 0;
+            return m.getLabels().getAddress(operandLabel);
         }
     }
 
     @Override
     public String toString() {
-        return getLabelString() + getOpcode() + " " + result + " " + targetLabel;
+        return getLabelString() + getOpcode() + " " + result + " " + operandLabel;
     }
 
     @Override

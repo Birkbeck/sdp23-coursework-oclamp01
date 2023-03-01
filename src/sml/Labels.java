@@ -23,10 +23,9 @@ public final class Labels {
 		Objects.requireNonNull(label);
 		// TODO: Add a check that there are no label duplicates.
 		// TODO: Do I also need to check for value?
-		if (labels.containsKey(label)) {
+		if (!labels.containsKey(label)) {
 			labels.put(label, address);
 		}
-
 	}
 
 	/**
@@ -39,7 +38,7 @@ public final class Labels {
 		// TODO: Where can NullPointerException be thrown here?
 		//       (Write an explanation.)
 		//       Add code to deal with non-existent labels.
-		return labels.get(label);
+			return labels.get(label);
 	}
 
 	/**

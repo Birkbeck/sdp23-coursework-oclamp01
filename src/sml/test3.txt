@@ -1,0 +1,7 @@
+f2: mov EAX 6
+f2: mov EBX 1
+f2: mov ECX 1
+f3: mul EBX EAX
+f2: sub EAX ECX
+f2: jnz EAX f3
+f2: out EBX
