@@ -1,8 +1,11 @@
 package sml;
 
+import sml.instruction.AddInstruction;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 // TODO: write a JavaDoc for the class
 
@@ -38,7 +41,7 @@ public final class Labels {
 		// TODO: Where can NullPointerException be thrown here?
 		//       (Write an explanation.)
 		//       Add code to deal with non-existent labels.
-			return labels.get(label);
+		return labels.get(label);
 	}
 
 	/**
@@ -50,14 +53,23 @@ public final class Labels {
 	@Override
 	public String toString() {
 		// TODO: Implement the method using the Stream API (see also class Registers).
-		return "";
+		return labels.entrySet().stream()
+				.sorted(Map.Entry.comparingByKey())
+				.map(e -> e.getKey() + " = " + e.getValue())
+				.collect(Collectors.joining(", ", "[", "]")) ;
 	}
 
+	// TODO: Implement equals and hashCode (needed in class Machine).
 	@Override
 	public int hashCode() {
 		return labels.hashCode();
 	}
-	// TODO: Implement equals and hashCode (needed in class Machine).
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		return labels.equals(o); // TODO
+	}
 
 	/**
 	 * Removes the labels
