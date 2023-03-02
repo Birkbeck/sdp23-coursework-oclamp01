@@ -51,9 +51,13 @@ public class MovInstruction extends Instruction {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MovInstruction that)) return false;
-        return result.equals(that.result) && operandInt.equals(that.operandInt); // TODO
+        if (o instanceof MovInstruction other) {
+            return Objects.equals(this.label, other.label)
+                    && Objects.equals(this.result, other.result)
+                    && Objects.equals(this.operandInt, other.operandInt)
+                    && Objects.equals(this.OP_CODE, other.OP_CODE);
+        }
+        return false;
     }
 
     @Override

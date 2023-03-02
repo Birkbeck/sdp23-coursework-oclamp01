@@ -57,10 +57,13 @@ public class JnzInstruction extends Instruction {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SubInstruction that)) return false;
+        if (o instanceof JnzInstruction other) {
+            return Objects.equals(this.label, other.label)
+                    && Objects.equals(this.result, other.result)
+                    && Objects.equals(this.operandLabel, other.operandLabel)
+                    && Objects.equals(this.OP_CODE, other.OP_CODE);
+        }
         return false;
-        // TODO
     }
 
     @Override

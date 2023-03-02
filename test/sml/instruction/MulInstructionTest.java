@@ -45,4 +45,20 @@ class MulInstructionTest {
         instruction.execute(machine);
         Assertions.assertEquals(-30, machine.getRegisters().get(EAX));
     }
+
+    @Test
+    void testToStringNoLabel() {
+        registers.set(EAX, 3);
+        registers.set(EDX, 4);
+        Instruction instruction = new MulInstruction(null, EAX, EDX);
+        Assertions.assertEquals("mul EAX EDX", instruction.toString());
+    }
+
+    @Test
+    void testToStringWithLabel() {
+        registers.set(EAX, 3);
+        registers.set(EDX, 4);
+        Instruction instruction = new MulInstruction("a8", EAX, EDX);
+        Assertions.assertEquals("a8: mul EAX EDX", instruction.toString());
+    }
 }

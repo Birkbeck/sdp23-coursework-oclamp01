@@ -76,9 +76,9 @@ Machine {
 	// https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Machine) {
-			// TODO:
-			Machine other = (Machine) o;
+		if (o instanceof Machine other) {
+			// Machine other = (Machine) o; // Casting of o to Machine unnecessary if Object o is of Machine type,
+											// else return false
 			return Objects.equals(this.labels, other.labels)
 					&& Objects.equals(this.program, other.program)
 					&& Objects.equals(this.registers, other.registers)

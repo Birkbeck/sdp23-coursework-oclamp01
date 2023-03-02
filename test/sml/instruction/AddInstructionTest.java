@@ -45,4 +45,38 @@ class AddInstructionTest {
     instruction.execute(machine);
     Assertions.assertEquals(1, machine.getRegisters().get(EAX));
   }
+
+  @Test
+  void testToStringNoLabel() {
+    registers.set(EAX, 3);
+    registers.set(EDX, 4);
+    Instruction instruction = new AddInstruction(null, EAX, EDX);
+    Assertions.assertEquals("add EAX EDX", instruction.toString());
+  }
+
+  @Test
+  void testToStringWithLabel() {
+    registers.set(EAX, 3);
+    registers.set(EDX, 4);
+    Instruction instruction = new AddInstruction("f3", EAX, EDX);
+    Assertions.assertEquals("f3: add EAX EDX", instruction.toString());
+  }
+
+  @Test
+  void testEqualsOne() {
+    registers.set(EAX, 3);
+    registers.set(EDX, 4);
+    Instruction instructionOne = new AddInstruction("f2", EAX, EBX);
+    Instruction instructionTwo = new AddInstruction("f2", EAX, EBX);
+    Assertions.assertEquals(true, instructionOne.equals(instructionTwo));
+  }
+
+  @Test
+  void testEqualsTwo() {
+    registers.set(ESI, 5);
+    registers.set(ESP, 6);
+    Instruction instructionOne = new AddInstruction("f2", ESI, ESP);
+    Instruction instructionTwo = new SubInstruction("f2", ESI, ESP);
+    Assertions.assertEquals(false, instructionOne.equals(instructionTwo));
+  }
 }

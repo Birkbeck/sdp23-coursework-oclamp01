@@ -30,19 +30,23 @@ class OutInstructionTest {
 
     @Test
     void executeValid() {
-        registers.set(EAX, 5);
-        registers.set(EBX, 6);
-        Instruction instruction = new MulInstruction(null, EAX, EBX);
-        instruction.execute(machine);
-        Assertions.assertEquals(30, machine.getRegisters().get(EAX));
     }
 
     @Test
     void executeValidTwo() {
-        registers.set(EAX, -5);
-        registers.set(EBX, 6);
-        Instruction instruction = new MulInstruction(null, EAX, EBX);
-        instruction.execute(machine);
-        Assertions.assertEquals(-30, machine.getRegisters().get(EAX));
+    }
+
+    @Test
+    void testToStringNoLabel() {
+        registers.set(ESI, 8);
+        Instruction instruction = new OutInstruction(null, ESI);
+        Assertions.assertEquals("out ESI", instruction.toString());
+    }
+
+    @Test
+    void testToStringWithLabel() {
+        registers.set(ESI, 8);
+        Instruction instruction = new OutInstruction("f2", ESI);
+        Assertions.assertEquals("f2: out ESI", instruction.toString());
     }
 }

@@ -45,4 +45,20 @@ class DivInstructionTest {
         instruction.execute(machine);
         Assertions.assertEquals(11, machine.getRegisters().get(EAX));
     }
+
+    @Test
+    void testToStringNoLabel() {
+        registers.set(ESI, 8);
+        registers.set(ESP, 2);
+        Instruction instruction = new DivInstruction(null, ESI, ESP);
+        Assertions.assertEquals("div ESI ESP", instruction.toString());
+    }
+
+    @Test
+    void testToStringWithLabel() {
+        registers.set(ESI, 3);
+        registers.set(ESP, 4);
+        Instruction instruction = new DivInstruction("c2", ESI, ESP);
+        Assertions.assertEquals("c2: div ESI ESP", instruction.toString());
+    }
 }

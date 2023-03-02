@@ -50,11 +50,14 @@ public class AddInstruction extends Instruction {
 		return getLabelString() + getOpcode() + " " + result + " " + source;
 	}
 
+	/**
+	 * @param o the AddInstruction to be compared for equality
+	 *          Pattern matching is used to remove intermediate casting step
+	 * @return true if o is instanceof AddInstruction, and label, result, source and OP_CODE fields are equal
+	 */
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof AddInstruction) {
-			// TODO: pattern-matching for instanceof
-			AddInstruction other = (AddInstruction) o;
+		if (o instanceof AddInstruction other) {
 			return Objects.equals(this.label, other.label)
 					&& Objects.equals(this.result, other.result)
 					&& Objects.equals(this.source, other.source)
