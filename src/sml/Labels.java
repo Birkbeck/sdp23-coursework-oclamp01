@@ -25,7 +25,8 @@ public final class Labels {
 	public void addLabel(String label, int address) {
 		Objects.requireNonNull(label);
 		// TODO: Add a check that there are no label duplicates.
-		// TODO: Do I also need to check for value?
+		// Simple if statement to check whether labels HashMap already contains key
+		// referred to by String label
 		if (!labels.containsKey(label)) {
 			labels.put(label, address);
 		}

@@ -4,6 +4,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 // TODO: write a JavaDoc for the class
+/**
+ * Represents the Registers, which are used by the instructions to perform operations within the Machine.
+ * There are 8 registers, stored as enum variables of type Registers.Register. There are several methods to
+ * work with them, including to clear them (at the start of an operation in the constructor), getters and setters
+ * using the HashMap set() and get() methods, as well as overriden equals(), hashCode() and toString() methods.
+ */
 
 /**
  *

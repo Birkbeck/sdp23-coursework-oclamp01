@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.lang.reflect.*;
 
 import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
 
 /**
  * Represents the machine, the context in which programs run.
  * <p>
- * An instance contains 32 registers and methods to access and change them.
+ * An instance contains 8 registers and methods to access and change them.
  *
  */
 public final class
