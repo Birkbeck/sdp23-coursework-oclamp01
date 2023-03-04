@@ -165,13 +165,12 @@ There are two components to this coursework assignment.
 1. Complete the methods in the `Instruction` class — this may require you to add some fields,  
    which should be *protected*, so that they are accessible in any subclasses.
 
-2. Now create a subclass of `Instruction` for each kind of SML instruction and fix 
-   the method `Translator.instruction` so that it properly translates that kind of instruction.
-   *Recommended*: write one instruction at a time and test it out thoroughly, before proceeding to the next!
+2. Study the implementation of a concrete subclass AddInstruction of Instruction and
+   associated test class AddInstructionTest.
 
-3. Start with the `add` instruction, because the code for translating it is already there — 
-   in method `Translator.instruction`.  Initially, the program will not compile because there is no class 
-   for the instruction `add`; once that class is written, the program will compile.
+3. Now create a subclass of Instruction for each of the remaining six kinds of SML instructions and fix the 
+   method Translator.getInstruction so that it properly translates that kind of instruction.
+   Recommended: write one instruction at a time and test it out thoroughly, before proceeding to the next!
 
 4. For each instruction, the subclass needs appropriate fields, a constructor, 
    `toString` method, and a method `execute`; `toString` and `execute` should override 

@@ -6,6 +6,9 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
+import static sml.Registers.Register.EAX;
+import static sml.Registers.Register.EBX;
+
 // TODO: write a JavaDoc for the class
 
 /**
@@ -55,8 +58,17 @@ public class JnzInstruction extends Instruction {
         return getLabelString() + getOpcode() + " " + result + " " + operandLabel;
     }
 
+    /**
+     * @param o the object to be compared for equality
+     *          Pattern matching is used to remove intermediate casting step
+     * @return true if o is instanceof JnzInstruction, and label, result, operandLabel and OP_CODE fields are equal,
+     *          and false otherwise
+     */
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         if (o instanceof JnzInstruction other) {
             return Objects.equals(this.label, other.label)
                     && Objects.equals(this.result, other.result)
@@ -66,8 +78,11 @@ public class JnzInstruction extends Instruction {
         return false;
     }
 
+    /**
+     * @return int hash of array of fields of OutInstruction (label, OP_CODE. result and operandLabel)
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(result); // TODO
+        return Objects.hash(label, OP_CODE, result, operandLabel);
     }
 }

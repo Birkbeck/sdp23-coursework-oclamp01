@@ -28,8 +28,9 @@ class SubInstructionTest {
         registers = null;
     }
 
+    // Testing subtraction of two positive integers
     @Test
-    void executeValid() {
+    void executeValid1() {
         registers.set(EAX, 5);
         registers.set(EBX, 6);
         Instruction instruction = new SubInstruction(null, EAX, EBX);
@@ -37,8 +38,9 @@ class SubInstructionTest {
         Assertions.assertEquals(-1, machine.getRegisters().get(EAX));
     }
 
+    // Testing subtraction of two integers, one negative
     @Test
-    void executeValidTwo() {
+    void executeValid2() {
         registers.set(EAX, -5);
         registers.set(EBX, 6);
         Instruction instruction = new SubInstruction(null, EAX, EBX);
@@ -46,37 +48,90 @@ class SubInstructionTest {
         Assertions.assertEquals(-11, machine.getRegisters().get(EAX));
     }
 
+    // Testing subtraction of two integers, one negative and one zero
+    @Test
+    void executeValid3() {
+        registers.set(EAX, -5);
+        registers.set(EBX, 0);
+        Instruction instruction = new SubInstruction(null, EAX, EBX);
+        instruction.execute(machine);
+        Assertions.assertEquals(-5, machine.getRegisters().get(EAX));
+    }
+
+    // Testing toString() result of instruction without label
     @Test
     void testToStringNoLabel() {
-        registers.set(ECX, 10);
-        registers.set(EDI, 2);
-        Instruction instruction = new SubInstruction(null, ECX, EDI);
-        Assertions.assertEquals("sub ECX EDI", instruction.toString());
+        Instruction instruction = new SubInstruction(null, EBX, ESI);
+        Assertions.assertEquals("sub EBX ESI", instruction.toString());
     }
 
+    // Testing toString() result of instruction with label
     @Test
     void testToStringWithLabel() {
-        registers.set(ECX, 10);
-        registers.set(EDI, 2);
-        Instruction instruction = new SubInstruction("d3", ECX, EDI);
-        Assertions.assertEquals("d3: sub ECX EDI", instruction.toString());
+        Instruction instruction = new SubInstruction("d8", EAX, EDX);
+        Assertions.assertEquals("d8: sub EAX EDX", instruction.toString());
     }
 
+    // Testing equality of two instructions of different types but same label, result and source registers
     @Test
-    void testEqualsOne() {
-        registers.set(EAX, 3);
-        registers.set(EDX, 4);
-        Instruction instructionOne = new SubInstruction(null, EAX, EBX);
-        Instruction instructionTwo = new SubInstruction(null, EAX, EBX);
-        Assertions.assertEquals(true, instructionOne.equals(instructionTwo));
-    }
-
-    @Test
-    void testEqualsTwo() {
-        registers.set(ESI, 5);
-        registers.set(ESP, 6);
-        Instruction instructionOne = new AddInstruction("f2", ESI, ESP);
-        Instruction instructionTwo = new SubInstruction("f2", ESI, ESP);
+    void testEqualsandHashCode1() {
+        Instruction instructionOne = new SubInstruction("f2", EAX, EBX);
+        Instruction instructionTwo = new MulInstruction("f2", EAX, EBX);
         Assertions.assertEquals(false, instructionOne.equals(instructionTwo));
+        Assertions.assertNotEquals(instructionOne.hashCode(), instructionTwo.hashCode());
+    }
+
+    // Testing equality of two instructions of same type and same label, result and source registers
+    @Test
+    void testEqualsandHashCode2() {
+        Instruction instructionOne = new SubInstruction("f2", EAX, EBX);
+        Instruction instructionTwo = new SubInstruction("f2", EAX, EBX);
+        Assertions.assertEquals(true, instructionOne.equals(instructionTwo));
+        Assertions.assertEquals(instructionOne.hashCode(), instructionTwo.hashCode());
+    }
+
+    // Testing equality of two sub instructions with different labels (one null)
+    @Test
+    void testEqualsandHashCode3() {
+        Instruction instructionOne = new SubInstruction(null , ESI, ESP);
+        Instruction instructionTwo = new SubInstruction("f3", ESI, ESP);
+        Assertions.assertEquals(false, instructionOne.equals(instructionTwo));
+        Assertions.assertNotEquals(instructionOne.hashCode(), instructionTwo.hashCode());
+    }
+
+    // Testing equality of two sub instructions with same labels (both null)
+    @Test
+    void testEqualsandHashCode4() {
+        Instruction instructionOne = new SubInstruction(null , ESI, ESP);
+        Instruction instructionTwo = new SubInstruction(null, ESI, ESP);
+        Assertions.assertEquals(true, instructionOne.equals(instructionTwo));
+        Assertions.assertEquals(instructionOne.hashCode(), instructionTwo.hashCode());
+    }
+
+    // Testing equality of two sub instructions with different labels (both non-null)
+    @Test
+    void testEqualsandHashCode5() {
+        Instruction instructionOne = new SubInstruction("f2" , ESI, ESP);
+        Instruction instructionTwo = new SubInstruction("f3", ESI, ESP);
+        Assertions.assertEquals(false, instructionOne.equals(instructionTwo));
+        Assertions.assertNotEquals(instructionOne.hashCode(), instructionTwo.hashCode());
+    }
+
+    // Testing equality of two sub instructions with different result registers
+    @Test
+    void testEqualsandHashCode6() {
+        Instruction instructionOne = new SubInstruction("h4" , ESI, ESP);
+        Instruction instructionTwo = new SubInstruction("h4", ECX, ESP);
+        Assertions.assertEquals(false, instructionOne.equals(instructionTwo));
+        Assertions.assertNotEquals(instructionOne.hashCode(), instructionTwo.hashCode());
+    }
+
+    // Testing equality of two sub instructions with different source registers
+    @Test
+    void testEqualsandHashCode7() {
+        Instruction instructionOne = new SubInstruction("h4" , ESI, EDX);
+        Instruction instructionTwo = new SubInstruction("h4", ESI, EDI);
+        Assertions.assertEquals(false, instructionOne.equals(instructionTwo));
+        Assertions.assertNotEquals(instructionOne.hashCode(), instructionTwo.hashCode());
     }
 }

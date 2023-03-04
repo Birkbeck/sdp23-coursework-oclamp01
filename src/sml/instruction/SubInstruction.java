@@ -50,8 +50,17 @@ public class SubInstruction extends Instruction {
         return getLabelString() + getOpcode() + " " + result + " " + source;
     }
 
+    /**
+     * @param o the object to be compared for equality
+     * 	 *          Pattern matching is used to remove intermediate casting step
+     * @return true if o is instanceof SubInstruction, and label, result, source and OP_CODE fields are equal,
+     * 	 * 			and false otherwise
+     */
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         if (o instanceof SubInstruction other) {
             return Objects.equals(this.label, other.label)
                     && Objects.equals(this.result, other.result)
@@ -61,8 +70,11 @@ public class SubInstruction extends Instruction {
         return false;
     }
 
+    /**
+     * @return int hash of array of fields of SubInstruction (label, OP_CODE, result and source)
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(result, source); // TODO
+        return Objects.hash(label, OP_CODE, result, source);
     }
 }

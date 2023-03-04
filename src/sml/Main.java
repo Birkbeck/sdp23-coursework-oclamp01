@@ -27,7 +27,7 @@ public class Main {
 			System.out.println("Ending program execution.");
 
 			System.out.println("Values of registers at program termination:" + m.getRegisters() + ".");
-			// Provides information about labels in program
+			// Additional code to provide information about labels in program
 			System.out.print("Labels in program: ");
 			System.out.println(m.getLabels().toString());
 		}

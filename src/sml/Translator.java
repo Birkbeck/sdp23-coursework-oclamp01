@@ -14,8 +14,6 @@ import static sml.Registers.Register;
  * This class ....
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
- *
- * @author ...
  */
 public final class Translator {
 

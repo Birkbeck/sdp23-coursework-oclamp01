@@ -6,6 +6,8 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
+import static sml.Registers.Register.*;
+
 // TODO: write a JavaDoc for the class
 
 /**
@@ -19,7 +21,7 @@ public class AddInstruction extends Instruction {
 	public static final String OP_CODE = "add";
 
 	/**
-	 * @param label (optional) label of instruction
+	 * @param label  (optional) label of instruction
 	 * @param result register where result of addition will be stored, and which contains first addition operand
 	 * @param source register containing second addition operand
 	 */
@@ -51,12 +53,16 @@ public class AddInstruction extends Instruction {
 	}
 
 	/**
-	 * @param o the AddInstruction to be compared for equality
+	 * @param o the object to be compared for equality
 	 *          Pattern matching is used to remove intermediate casting step
-	 * @return true if o is instanceof AddInstruction, and label, result, source and OP_CODE fields are equal
+	 * @return true if o is instanceof AddInstruction, and label, result, source and OP_CODE fields are equal,
+	 * 			and false otherwise
 	 */
 	@Override
 	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
 		if (o instanceof AddInstruction other) {
 			return Objects.equals(this.label, other.label)
 					&& Objects.equals(this.result, other.result)
@@ -66,8 +72,11 @@ public class AddInstruction extends Instruction {
 		return false;
 	}
 
+	/**
+	 * @return int hash of array of fields of AddInstruction (label, OP_CODE, result and source)
+	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(result, source);  // TODO
+		return Objects.hash(label, OP_CODE, result, source);
 	}
 }

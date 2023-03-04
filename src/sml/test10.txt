@@ -1,0 +1,7 @@
+    mov EAX 6
+f1: mov EBX 2
+    div EAX EBX
+    out EAX
+    mov ECX "hello"
+f3: mul ECX EAX
+    out EBX

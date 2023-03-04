@@ -49,8 +49,17 @@ public class MovInstruction extends Instruction {
         return getLabelString() + getOpcode() + " " + result + " " + operandInt;
     }
 
+    /**
+     * @param o the object to be compared for equality
+     *          Pattern matching is used to remove intermediate casting step
+     * @return true if o is instanceof MovInstruction, and label, result, operandInt and OP_CODE fields are equal,
+     *          and false otherwise
+     */
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         if (o instanceof MovInstruction other) {
             return Objects.equals(this.label, other.label)
                     && Objects.equals(this.result, other.result)
@@ -60,8 +69,11 @@ public class MovInstruction extends Instruction {
         return false;
     }
 
+    /**
+     * @return int hash of array of fields of MovInstruction (label, OP_CODE, result and operandInt)
+     */
     @Override
     public int hashCode() {
-        return Objects.hash(result, operandInt); // TODO
+        return Objects.hash(label, OP_CODE, result, operandInt);
     }
 }
