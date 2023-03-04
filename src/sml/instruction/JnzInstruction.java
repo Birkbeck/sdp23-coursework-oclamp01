@@ -6,10 +6,7 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-import static sml.Registers.Register.EAX;
-import static sml.Registers.Register.EBX;
-
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class - COMPLETE
 
 /**
  * Subclass of Instruction abstract class used for branching to another instruction
@@ -19,8 +16,8 @@ import static sml.Registers.Register.EBX;
  * in switch statement in Machine class.
  */
 public class JnzInstruction extends Instruction {
-    private final RegisterName result;
-    private final String operandLabel;
+    protected final RegisterName result;
+    protected final String operandLabel;
 
     public static final String OP_CODE = "jnz";
 

@@ -6,15 +6,15 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class - COMPLETE
 
 /**
  * Subclass of Instruction abstract class used for performing division operations. Contains result and source
  * fields for register operands, and static OP_CODE field to enable execution in switch statement in Machine class.
  */
 public class DivInstruction extends Instruction {
-    private final RegisterName result;
-    private final RegisterName source;
+    protected final RegisterName result;
+    protected final RegisterName source;
 
     public static final String OP_CODE = "div";
 
@@ -39,8 +39,8 @@ public class DivInstruction extends Instruction {
     public int execute(Machine m) {
         int value1 = m.getRegisters().get(result);
         int value2 = m.getRegisters().get(source);
-        m.getRegisters().set(result, value1 / value2);
-        return NORMAL_PROGRAM_COUNTER_UPDATE;
+            m.getRegisters().set(result, value1 / value2);
+            return NORMAL_PROGRAM_COUNTER_UPDATE;
     }
 
     /**

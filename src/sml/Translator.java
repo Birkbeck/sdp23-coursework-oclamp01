@@ -11,7 +11,9 @@ import java.util.Scanner;
 import static sml.Registers.Register;
 
 /**
- * This class ....
+ * This class translates the machine's program into its internal form. It reads the input file name
+ * and scans each line of the text file, adding label (if it exists) to the HashMap labels, and each instruction
+ * to the ArrayList instructions. The getInstruction() method also determines which instruction subclass to execute.
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  */

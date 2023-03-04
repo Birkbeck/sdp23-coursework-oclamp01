@@ -8,15 +8,15 @@ import java.util.Objects;
 
 import static sml.Registers.Register.*;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class - COMPLETE
 
 /**
  * Subclass of Instruction abstract class used for performing addition operations. Contains result and source fields
  * for register operands, and static OP_CODE field to enable execution in switch statement in Machine class.
  */
 public class AddInstruction extends Instruction {
-	private final RegisterName result;
-	private final RegisterName source;
+	protected final RegisterName result;
+	protected final RegisterName source;
 
 	public static final String OP_CODE = "add";
 

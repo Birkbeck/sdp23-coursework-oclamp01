@@ -5,7 +5,6 @@ import java.io.IOException;
 public class Main {
 	/**
 	 * Initialises the system and executes the program.
-	 *
 	 * @param args name of the file containing the program text.
 	 */
 	public static void main(String... args) {

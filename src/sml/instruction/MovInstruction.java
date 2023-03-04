@@ -6,7 +6,7 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class - COMPLETE
 
 /**
  * Subclass of Instruction abstract class used for moving integer values to the specified register.
@@ -14,8 +14,8 @@ import java.util.Objects;
  * and static OP_CODE field to enable execution in switch statement in Machine class.
  */
 public class MovInstruction extends Instruction {
-    private final RegisterName result;
-    private Integer operandInt;
+    protected final RegisterName result;
+    protected final Integer operandInt;
 
     public static final String OP_CODE = "mov";
 

@@ -6,7 +6,7 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class - COMPLETE
 
 /**
  * Subclass of Instruction abstract class used for performing print operations to the console.
@@ -14,7 +14,7 @@ import java.util.Objects;
  * enable execution in switch statement in Machine class.
  */
 public class OutInstruction extends Instruction {
-    private final RegisterName result;
+    protected final RegisterName result;
 
     public static final String OP_CODE = "out";
 
@@ -30,7 +30,7 @@ public class OutInstruction extends Instruction {
     /**
      * @param m the machine the instruction runs on
      * @return NORMAL_PROGRAM_COUNTER_UPDATE to indicate that this is not a branch instruction
-     * Name of register and value printed to console
+     * "Value of register" + name of result register + ":" + content of result register printed to console
      */
     @Override
     public int execute(Machine m) {

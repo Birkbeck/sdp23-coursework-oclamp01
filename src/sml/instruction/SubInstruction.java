@@ -6,15 +6,15 @@ import sml.RegisterName;
 
 import java.util.Objects;
 
-// TODO: write a JavaDoc for the class
+// TODO: write a JavaDoc for the class - COMPLETE
 
 /**
  * Subclass of Instruction abstract class used for performing subtraction operations. Contains result and source fields
  * for register operands, and static OP_CODE field to enable execution in switch statement in Machine class.
  */
 public class SubInstruction extends Instruction {
-    private final RegisterName result;
-    private final RegisterName source;
+    protected final RegisterName result;
+    protected final RegisterName source;
 
     public static final String OP_CODE = "sub";
 

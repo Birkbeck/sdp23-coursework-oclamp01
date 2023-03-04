@@ -27,6 +27,9 @@ Machine {
 	// of the next instruction to be executed.
 	private int programCounter = 0;
 
+	/**
+	 * @param registers
+	 */
 	public Machine(Registers registers) {
 		this.registers = registers;
 	}
@@ -47,14 +50,23 @@ Machine {
 		}
 	}
 
+	/**
+	 * @return this machine's labels (HashMap<String>, <Integer>)
+	 */
 	public Labels getLabels() {
 		return this.labels;
 	}
 
+	/**
+	 * @return this machine's program (ArrayList<Instruction>)
+	 */
 	public List<Instruction> getProgram() {
 		return this.program;
 	}
 
+	/**
+	 * @return this machine's registers (HashMap<String>, <Integer>)
+	 */
 	public Registers getRegisters() {
 		return this.registers;
 	}
@@ -72,8 +84,13 @@ Machine {
 				.collect(Collectors.joining("\n"));
 	}
 
-	// TODO: use pattern matching for instanceof
+	// TODO: use pattern matching for instanceof - COMPLETE
 	// https://docs.oracle.com/en/java/javase/14/language/pattern-matching-instanceof-operator.html
+	/**
+	 * @param o the object being compared for equality
+	 * @return true if o is an object of type Machine and labels, programs, registers and programCounter are all
+	 * equal, and false otherwise
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Machine other) {
@@ -87,6 +104,9 @@ Machine {
 		return false;
 	}
 
+	/**
+	 * @return int hash of array of fields of machine
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(labels, program, registers, programCounter);
