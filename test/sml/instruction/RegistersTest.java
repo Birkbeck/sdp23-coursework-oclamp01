@@ -11,67 +11,106 @@ import sml.Registers;
 import static sml.Registers.Register.*;
 
 class RegistersTest {
-    private Machine machine;
-    private Registers registers;
+    private Machine machine1;
+    private Registers registers1;
+    private Machine machine2;
+    private Registers registers2;
 
     @BeforeEach
     void setUp() {
-        machine = new Machine(new Registers());
-        registers = machine.getRegisters();
-        //...
+        machine1 = new Machine(new Registers());
+        registers1 = machine1.getRegisters();
+        machine2 = new Machine(new Registers());
+        registers2 = machine2.getRegisters();
     }
 
     @AfterEach
     void tearDown() {
-        machine = null;
-        registers = null;
+        machine1 = null;
+        registers1 = null;
+        machine2 = null;
+        registers2 = null;
     }
 
-    // Testing result of division of two positive integers, expecting 0
-    // (noting that integer (not floor) division is specified)
+    // Testing string output of registers after setting four registers
     @Test
-    void executeValid1() {
-        registers.set(EAX, 5);
-        registers.set(EBX, 6);
-        Instruction instruction = new DivInstruction(null, EAX, EBX);
-        instruction.execute(machine);
-        Assertions.assertEquals(0, machine.getRegisters().get(EAX));
+    void testToString1() {
+        registers1.set(EAX, 3);
+        registers1.set(EBX, 4);
+        registers1.set(ECX, 5);
+        registers1.set(ESI, 6);
+        Assertions.assertEquals("[EAX = 3, EBX = 4, ECX = 5, EDX = 0, ESP = 0, EBP = 0, ESI = 6, EDI = 0]",
+                registers1.toString());
     }
 
-    // Testing result of division of two negative integers
+    // Similar test of string output with other four registers set to new values
     @Test
-    void executeValid2() {
-        registers.set(ESP, -8);
-        registers.set(ESI, -2);
-        Instruction instruction = new DivInstruction(null, ESP, ESI);
-        instruction.execute(machine);
-        Assertions.assertEquals(4, machine.getRegisters().get(ESP));
+    void testToString2() {
+        registers2.set(EDX, 1);
+        registers2.set(ESP, 2);
+        registers2.set(EBP, 3);
+        registers2.set(EDI, 4);
+        Assertions.assertEquals("[EAX = 0, EBX = 0, ECX = 0, EDX = 1, ESP = 2, EBP = 3, ESI = 0, EDI = 4]",
+                registers2.toString());
     }
 
-    // Testing toString() result of instruction without label
+    // Testing equality of two sets of registers with registers set to same values
     @Test
-    void testToStringNoLabel() {
-        registers.set(ESI, 8);
-        registers.set(ESP, 2);
-        Instruction instruction = new DivInstruction(null, ESI, ESP);
-        Assertions.assertEquals("div ESI ESP", instruction.toString());
+    void testEquals1() {
+        registers1.set(EAX, 3);
+        registers1.set(EBX, 4);
+        registers1.set(ECX, 5);
+        registers1.set(ESI, 6);
+        registers2.set(EAX, 3);
+        registers2.set(EBX, 4);
+        registers2.set(ECX, 5);
+        registers2.set(ESI, 6);
+        Assertions.assertEquals(true, registers1.equals(registers2));
     }
 
-    // Testing toString() result of instruction with label
+    // Testing equality of two sets of registers with one register set to different values
     @Test
-    void testToStringWithLabel() {
-        registers.set(ESI, 3);
-        registers.set(ESP, 4);
-        Instruction instruction = new DivInstruction("c2", ESI, ESP);
-        Assertions.assertEquals("c2: div ESI ESP", instruction.toString());
+    void testEquals2() {
+        registers1.set(EAX, 3);
+        registers1.set(EBX, 4);
+        registers1.set(ECX, 5);
+        registers1.set(ESI, 6);
+        registers1.set(EBP, 8);
+        registers2.set(EAX, 3);
+        registers2.set(EBX, 4);
+        registers2.set(ECX, 4);
+        registers2.set(ESI, 6);
+        registers2.set(EBP, 8);
+        Assertions.assertEquals(false, registers1.equals(registers2));
     }
 
-    // Testing equality of two instructions of different types but same label, result and source registers
+    // Testing equality of two hashCodes when registers are set to same values
     @Test
-    void testEqualsandHashCode1() {
-        Instruction instructionOne = new DivInstruction("f2", EAX, EBX);
-        Instruction instructionTwo = new AddInstruction("f2", EAX, EBX);
-        Assertions.assertEquals(false, instructionOne.equals(instructionTwo));
-        Assertions.assertNotEquals(instructionOne.hashCode(), instructionTwo.hashCode());
+    void testHashCode1() {
+        registers1.set(EAX, 3);
+        registers1.set(EBX, 4);
+        registers1.set(ECX, 5);
+        registers1.set(ESI, 6);
+        registers2.set(EAX, 3);
+        registers2.set(EBX, 4);
+        registers2.set(ECX, 5);
+        registers2.set(ESI, 6);
+        Assertions.assertEquals(registers1.hashCode(), registers2.hashCode());
+    }
+
+    // Testing equality of two sets of registers with additional register set to same values
+    @Test
+    void testHashCode2() {
+        registers1.set(EAX, 3);
+        registers1.set(EBX, 4);
+        registers1.set(ECX, 5);
+        registers1.set(ESI, 6);
+        registers1.set(EBP, 9);
+        registers2.set(EAX, 3);
+        registers2.set(EBX, 4);
+        registers2.set(ECX, 5);
+        registers2.set(ESI, 6);
+        registers2.set(EBP, 9);
+        Assertions.assertEquals(registers1.hashCode(), registers2.hashCode());
     }
 }

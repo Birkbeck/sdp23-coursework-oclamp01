@@ -9,6 +9,9 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static sml.Registers.Register.*;
 
 class OutInstructionTest {
@@ -28,12 +31,23 @@ class OutInstructionTest {
         registers = null;
     }
 
+    // This test was produced with help from Baeldung at https://www.baeldung.com/java-testing-system-out-println
+    // Testing comparison of outInstruction output to console with expected string
+    // This test reassigns the standard output stream to a PrintStream with a ByteArrayOutputStream
+    // The trimmed output (avoiding line separators) is then compared with the expected value
+    // The standard output stream is then restored to System.out at the end of the test
     @Test
-    void executeValid() {
-    }
+    void executeValid1() {
+        registers.set(EAX, 4);
+        final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
 
-    @Test
-    void executeValidTwo() {
+        Instruction instruction = new OutInstruction(null, EAX);
+        instruction.execute(machine);
+
+        String actualResult = outputStreamCaptor.toString().trim();
+        Assertions.assertEquals("Value of register EAX: 4", actualResult);
+        System.setOut(System.out);
     }
 
     // Testing toString() result of instruction without label

@@ -1,0 +1,6 @@
+    mov EAX 4
+    mov EBX 1
+    out EAX
+L1: sub EAX EBX
+    out EAX
+    jnz EAX L1

@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
+import sml.Translator;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
 
 import static sml.Registers.Register.*;
 
@@ -18,7 +22,6 @@ class JnzInstructionTest {
   void setUp() {
     machine = new Machine(new Registers());
     registers = machine.getRegisters();
-    //...
   }
 
   @AfterEach
@@ -27,18 +30,36 @@ class JnzInstructionTest {
     registers = null;
   }
 
-  // TODO
+  // Testing successful execution of jnzInstruction in program which decrements value of EAX (initially 4)
+  // until it reaches 0. Expected final value of EAX is 0 following program execution
+  // Branching is expected and final value of register demonstrates successful branching
   @Test
   void executeValid1() {
-    registers.set(EAX, 5);
-    Instruction instruction = new JnzInstruction(null, EAX, "h8");
-    instruction.execute(machine);
-    Assertions.assertEquals(7, machine.getRegisters().get(EAX));
-  }
+    Translator t = new Translator("test/testFiles/test2a.txt");
+    try {
+      t.readAndTranslate(machine.getLabels(), machine.getProgram());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    machine.execute();
+    Assertions.assertEquals(0, machine.getRegisters().get(EAX));
+    }
 
-  // TODO
+  // Testing successful execution of jnzInstruction in program which decrements value of EAX (initially 4)
+  // until it reaches 0. Expected final value of EAX is 3 following program execution (where only the first
+  // subtraction operation from EAX occurs. In test2b.txt ECX is set to 0 and replaces EAX in the branching instruction
+  // in test2a.txt.
+  // No branching is expected and final value of register demonstrates successful non-branching
   @Test
   void executeValid2() {
+    Translator t = new Translator("test/testFiles/test2b.txt");
+    try {
+      t.readAndTranslate(machine.getLabels(), machine.getProgram());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    machine.execute();
+    Assertions.assertEquals(3, machine.getRegisters().get(EAX));
   }
 
   // Testing toString() result of instruction without label

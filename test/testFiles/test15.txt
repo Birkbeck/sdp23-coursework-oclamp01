@@ -1,0 +1,2 @@
+mov EAX 3
+f3: out EAX

@@ -42,10 +42,10 @@ public final class Labels {
 	 */
 	public int getAddress(String label) throws NullPointerException {
 		// TODO: Where can NullPointerException be thrown here?
+		//       Add code to deal with non-existent labels.
 		//       A NullPointerException may be thrown if a label in a program's JnzInstruction does not match
 		//		 an instruction in the program. E.g. if there is no instruction with label "f3" where there is
 		//		 also an instruction "jnz EAX f3"
-		//       Add code to deal with non-existent labels.
 		try {
 			return labels.get(label);
 		}

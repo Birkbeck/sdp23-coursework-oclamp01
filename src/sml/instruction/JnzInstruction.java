@@ -76,7 +76,7 @@ public class JnzInstruction extends Instruction {
     }
 
     /**
-     * @return int hash of array of fields of OutInstruction (label, OP_CODE. result and operandLabel)
+     * @return int hash of array of fields of JnzInstruction (label, OP_CODE. result and operandLabel)
      */
     @Override
     public int hashCode() {
