@@ -67,7 +67,7 @@ class DivInstructionTest {
         Assertions.assertEquals("c2: div ESI ESP", instruction.toString());
     }
 
-    // Testing equality of two instructions of different types but same label, result and source registers
+    // Testing equality of two instructions of different types but same label (not null), result and source registers
     @Test
     void testEqualsandHashCode1() {
         Instruction instructionOne = new DivInstruction("f2", EAX, EBX);

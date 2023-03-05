@@ -81,7 +81,7 @@ class AddInstructionTest {
     Assertions.assertNotEquals(instructionOne.hashCode(), instructionTwo.hashCode());
   }
 
-  // Testing equality of two instructions of same type and same label, result and source registers
+  // Testing equality of two instructions of same type and same label (not null), result and source registers
   @Test
   void testEqualsandHashCode2() {
     Instruction instructionOne = new AddInstruction("f2", EAX, EBX);

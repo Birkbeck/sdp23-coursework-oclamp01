@@ -4,6 +4,7 @@ import sml.instruction.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
@@ -62,64 +63,133 @@ public final class Translator {
      * with its label already removed.
      */
     private Instruction getInstruction(String label) {
-        if (line.isEmpty())
+        // TODO: add code for all other types of instructions - COMPLETE
+//        if (line.isEmpty())
+//            return null;
+//
+//        String opcode = scan();
+//        switch (opcode) {
+//            case AddInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
+//
+//            case SubInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
+//
+//            case MulInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
+//
+//            case DivInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
+//
+//            case OutInstruction.OP_CODE -> {
+//                String r = scan();
+//                return new OutInstruction(label, Register.valueOf(r));
+//            }
+//
+//            case MovInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new MovInstruction(label, Register.valueOf(r), Integer.valueOf(s));
+//            }
+//
+//            case JnzInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new JnzInstruction(label, Register.valueOf(r), String.valueOf(s));
+//            }
+//
+//            default -> {
+//                System.out.println("Unknown instruction: " + opcode);
+//            }
+//        }
+//        return null;
+
+//        // TODO: Then, replace the switch by using the Reflection API
+        // First, the scan() method is used to scan the opcode of
+        // the input line with label removed (see getLabel())
+        // As opcodes are lowercase but instruction subclasses are upper camel case, the opcode string needs
+        // to be properly formatted
+        if (line.isEmpty()) {
             return null;
-
-        String opcode = scan();
-        switch (opcode) {
-            case AddInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            case SubInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            case MulInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            case DivInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            case OutInstruction.OP_CODE -> {
-                String r = scan();
-                return new OutInstruction(label, Register.valueOf(r));
-            }
-
-            case MovInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MovInstruction(label, Register.valueOf(r), Integer.valueOf(s));
-            }
-
-            case JnzInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new JnzInstruction(label, Register.valueOf(r), String.valueOf(s));
-            }
-
-            // TODO: add code for all other types of instructions - COMPLETE
-
-            // TODO: Then, replace the switch by using the Reflection API
-
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
-
-            default -> {
-                System.out.println("Unknown instruction: " + opcode);
-            }
         }
-        return null;
+
+        // Scan the line for first word (opcode)
+        String opcode = scan();
+
+        // Shift first character of opcode to uppercase
+        char insFirstChar = opcode.charAt(0);
+        insFirstChar = Character.toUpperCase(insFirstChar);
+
+        // Pass in three-letter opcode to StringBuffer and set first character to uppercase
+        StringBuffer buffer = new StringBuffer(opcode);
+        buffer.setCharAt(0, insFirstChar);
+
+        // Instruction is then formatted to be used in reflective constructor selection (e.g. "AddInstruction")
+        String instruction = buffer.toString();
+        instruction = "sml." + instruction + "Instruction";
+
+        Object[] paramList;
+
+        // This code produced with help from Jenkov at https://jenkov.com/tutorials/java-reflection/constructors.html
+        try {
+            Class thisInstruction = Class.forName(instruction);
+            Constructor[] constructors = thisInstruction.getConstructors();
+     //    constructors[0] is the default constructor, so we need constructors[1]
+            Constructor insConstructor = constructors[1];
+         // Reading the parameters taken by a given constructor
+            Class[] paramsTypes = insConstructor.getParameterTypes();
+//         As different instructions have different numbers of parameters, the parameter list must be large enough
+//         for a given instruction
+            paramList = new Object[paramsTypes.length];
+//         For loop to iterate through parameter list to populate constructor with appropriate argument types
+            for (int i = 0; i < paramList.length; i++) {
+                if (i == 0) {
+                    paramList[i] = label;
+                }
+                else {
+                    Class newClass = paramsTypes[i];
+                    if (newClass.getName().equals("java.lang.String")) {
+                        String param = scan();
+                        paramList[i] = param;
+                    }
+                    else if (newClass.getName().equals("java.lang.Integer")) {
+                        Integer param = Integer.parseInt(scan());
+                        paramList[i] = param;
+                    }
+                    else if (newClass.getName().equals("sml.RegisterName")) {
+                        String param = scan();
+                        paramList[i] = param;
+                    }
+                    }
+                }
+            try {
+                return (Instruction) insConstructor.newInstance(paramList);
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+        }
+
+
+        // TODO: Next, use dependency injection to allow this machine class
+        //       to work with different sets of opcodes (different CPUs)
     }
 
 

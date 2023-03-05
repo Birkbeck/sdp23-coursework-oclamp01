@@ -78,7 +78,7 @@ class JnzInstructionTest {
     Assertions.assertEquals("f2: jnz ESI a2", instruction.toString());
   }
 
-  // Testing equality of two instructions of same type and same label, result register and operandLabel
+  // Testing equality of two instructions of same type and same label (not null), result register and operandLabel
   @Test
   void testEqualsandHashCode1() {
     Instruction instructionOne = new JnzInstruction("f2", EAX, "f3");
@@ -87,7 +87,8 @@ class JnzInstructionTest {
     Assertions.assertEquals(instructionOne.hashCode(), instructionTwo.hashCode());
   }
 
-  // Second (trivial) test of equality of two instructions of same type and same label, result register and operandLabel
+  // Second (trivial) test of equality of two instructions of same type and same label (not null),
+  // result register and operandLabel
   @Test
   void testEqualsandHashCode2() {
     Instruction instructionOne = new JnzInstruction("d4", ESI, "b4");

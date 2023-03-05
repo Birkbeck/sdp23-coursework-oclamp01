@@ -61,7 +61,7 @@ class MovInstructionTest {
     Assertions.assertEquals("f2: mov EDX 46", instruction.toString());
   }
 
-  // Testing equality of two instructions of same type and same label, result register and operandInt
+  // Testing equality of two instructions of same type and same label (not null), result register and operandInt
   @Test
   void testEqualsandHashCode1() {
     Instruction instructionOne = new MovInstruction("f2", EAX, 3);

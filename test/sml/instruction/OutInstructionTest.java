@@ -75,7 +75,7 @@ class OutInstructionTest {
         Assertions.assertEquals(instructionOne.hashCode(), instructionTwo.hashCode());
     }
 
-    // Second (trivial) test of equality of two instructions of same type, same label and result register
+    // Second (trivial) test of equality of two instructions of same type, same label (not null) and result register
     @Test
     void testEqualsandHashCode2() {
         Instruction instructionOne = new OutInstruction("d4", ESI);
