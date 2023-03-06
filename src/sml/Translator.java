@@ -116,7 +116,7 @@ public final class Translator {
 //        }
 //        return null;
 
-//        // TODO: Then, replace the switch by using the Reflection API
+//        // TODO: Then, replace the switch by using the Reflection API - COMPLETE
         // First, the scan() method is used to scan the opcode of
         // the input line with label removed (see getLabel())
         // As opcodes are lowercase but instruction subclasses are upper camel case, the opcode string needs
@@ -138,7 +138,7 @@ public final class Translator {
 
         // Instruction is then formatted to be used in reflective constructor selection (e.g. "AddInstruction")
         String instruction = buffer.toString();
-        instruction = "sml." + instruction + "Instruction";
+        instruction = "sml.instruction." + instruction + "Instruction";
 
         Object[] paramList;
 
@@ -146,8 +146,8 @@ public final class Translator {
         try {
             Class thisInstruction = Class.forName(instruction);
             Constructor[] constructors = thisInstruction.getConstructors();
-     //    constructors[0] is the default constructor, so we need constructors[1]
-            Constructor insConstructor = constructors[1];
+     //    thisInstruction.getConstructors() is of length 0, so we must choose constructors[0]
+            Constructor insConstructor = constructors[0];
          // Reading the parameters taken by a given constructor
             Class[] paramsTypes = insConstructor.getParameterTypes();
 //         As different instructions have different numbers of parameters, the parameter list must be large enough
@@ -164,12 +164,12 @@ public final class Translator {
                         String param = scan();
                         paramList[i] = param;
                     }
-                    else if (newClass.getName().equals("java.lang.Integer")) {
-                        Integer param = Integer.parseInt(scan());
-                        paramList[i] = param;
-                    }
                     else if (newClass.getName().equals("sml.RegisterName")) {
                         String param = scan();
+                        paramList[i] = Register.valueOf(param);
+                    }
+                    else if (newClass.getName().equals("java.lang.Integer")) {
+                        Integer param = Integer.parseInt(scan());
                         paramList[i] = param;
                     }
                     }
