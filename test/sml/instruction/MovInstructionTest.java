@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
+import sml.Translator;
+
+import java.io.IOException;
 
 import static sml.Registers.Register.*;
 
@@ -43,6 +46,19 @@ class MovInstructionTest {
     Instruction instruction = new MovInstruction(null, EBX, 21);
     instruction.execute(machine);
     Assertions.assertEquals(21, machine.getRegisters().get(EBX));
+  }
+
+  // Testing MovInstruction in program file using reflective Translator.getInstruction()
+  @Test
+  void executeValid3() {
+    Translator t = new Translator("test/testFiles/test17.txt");
+    try {
+      t.readAndTranslate(machine.getLabels(), machine.getProgram());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    machine.execute();
+    Assertions.assertEquals(8, machine.getRegisters().get(EAX));
   }
 
   // Testing toString() result of instruction without label

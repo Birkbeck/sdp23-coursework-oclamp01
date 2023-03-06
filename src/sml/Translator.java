@@ -150,10 +150,12 @@ public final class Translator {
             Constructor insConstructor = constructors[0];
          // Reading the parameters taken by a given constructor
             Class[] paramsTypes = insConstructor.getParameterTypes();
-//         As different instructions have different numbers of parameters, the parameter list must be large enough
-//         for a given instruction
-            paramList = new Object[paramsTypes.length];
-//         For loop to iterate through parameter list to populate constructor with appropriate argument types
+//         As different instructions have different numbers of parameters, the parameter list must accommodate the
+//         number of parameters for a given instruction
+                    paramList = new Object[paramsTypes.length];
+//         For loop to iterate through parameter list to populate constructor with appropriate argument types.
+            // There are three parameter types in the SML instruction set, which need to be converted to the
+            // correct type and inserted into the paramList array
             for (int i = 0; i < paramList.length; i++) {
                 if (i == 0) {
                     paramList[i] = label;
@@ -175,6 +177,8 @@ public final class Translator {
                     }
                 }
             try {
+                // Note that java.lang.reflect.Constructor.newInstance() is preferable to
+                // Class.newInstance() in this instance because the latter can only throw a zero-argument constructor
                 return (Instruction) insConstructor.newInstance(paramList);
             } catch (InstantiationException e) {
                 throw new RuntimeException(e);

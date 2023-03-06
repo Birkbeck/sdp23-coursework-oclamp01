@@ -15,7 +15,8 @@ public class Main {
 
 		try {
 			Translator t = new Translator(args[0]); // Where args is name of file containing program text
-			Machine m = new Machine(new Registers()); //
+			Machine m = new Machine(new Registers());
+					// new Machine(new Registers()); //
 			t.readAndTranslate(m.getLabels(), m.getProgram());
 
 			System.out.println("Here is the program; it has " + m.getProgram().size() + " instructions.");
