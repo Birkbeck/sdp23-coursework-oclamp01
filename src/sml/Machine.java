@@ -17,9 +17,6 @@ import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
 public final class
 Machine {
 
-	 // Commented out code to make Machine a Singleton class
-	// private static Machine instance;
-
 	private final Labels labels = new Labels();
 
 	private final List<Instruction> program = new ArrayList<>();

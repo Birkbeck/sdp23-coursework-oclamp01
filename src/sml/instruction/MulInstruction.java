@@ -11,6 +11,7 @@ import java.util.Objects;
 /**
  * Subclass of Instruction abstract class used for performing multiplication operations. Contains result and source
  * fields for register operands, and static OP_CODE field to enable execution in switch statement in Machine class.
+ * @author oclamp01
  */
 public class MulInstruction extends Instruction {
     protected final RegisterName result;

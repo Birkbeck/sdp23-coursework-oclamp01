@@ -129,15 +129,7 @@ public final class Translator {
         String opcode = scan();
 
         // Shift first character of opcode to uppercase
-        char insFirstChar = opcode.charAt(0);
-        insFirstChar = Character.toUpperCase(insFirstChar);
-
-        // Pass in three-letter opcode to StringBuffer and set first character to uppercase
-        StringBuffer buffer = new StringBuffer(opcode);
-        buffer.setCharAt(0, insFirstChar);
-
-        // Instruction is then formatted to be used in reflective constructor selection (e.g. "AddInstruction")
-        String instruction = buffer.toString();
+        String instruction = opcode.substring(0, 1).toUpperCase() + opcode.substring(1);
         instruction = "sml.instruction." + instruction + "Instruction";
 
         Object[] paramList;

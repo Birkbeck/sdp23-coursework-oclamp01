@@ -14,6 +14,7 @@ import java.util.Objects;
  * Contains result field for register where value is to be stored, the String label
  * indicating which instruction to branch to, and static OP_CODE field to enable execution
  * in switch statement in Machine class.
+ * @author oclamp01
  */
 public class JnzInstruction extends Instruction {
     protected final RegisterName result;

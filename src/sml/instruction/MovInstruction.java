@@ -12,6 +12,7 @@ import java.util.Objects;
  * Subclass of Instruction abstract class used for moving integer values to the specified register.
  * Contains result field for register where value is to be stored, the Integer value to be stored,
  * and static OP_CODE field to enable execution in switch statement in Machine class.
+ * @author oclamp01
  */
 public class MovInstruction extends Instruction {
     protected final RegisterName result;

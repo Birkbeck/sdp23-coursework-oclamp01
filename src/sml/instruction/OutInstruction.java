@@ -31,6 +31,7 @@ public class OutInstruction extends Instruction {
      * @param m the machine the instruction runs on
      * @return NORMAL_PROGRAM_COUNTER_UPDATE to indicate that this is not a branch instruction
      * "Value of register" + name of result register + ":" + content of result register printed to console
+     * @author oclamp01
      */
     @Override
     public int execute(Machine m) {
